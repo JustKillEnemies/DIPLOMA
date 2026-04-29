@@ -36,9 +36,6 @@ class OrderProducer:
             payload = task.model_dump(mode='json')
             self.producer.send(settings.KAFKA_TOPIC_ORDERS, key=task.order_id, value=payload)
             
-            # Если хочешь измерить именно время подтверждения от брокера, 
-            # используй future.get() и замеряй время до этого момента.
-            
             duration = time.perf_counter() - start_kafka
             logger.debug(f"Kafka Ingestion Time: {duration:.4f}s")
             return True
